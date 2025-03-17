@@ -1,0 +1,4 @@
+import fs from 'fs';
+const spinners = JSON.parse(fs.readFileSync(new URL('./spinners.json', import.meta.url), 'utf8'));
+
+export default spinners; 
