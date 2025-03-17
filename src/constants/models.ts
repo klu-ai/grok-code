@@ -15,10 +15,10 @@ export default {
           "supports_tool_choice": true
       },
       {
-          "model": "gpt-4o",
+          "model": "grok-3",
           "max_tokens": 16384,
           "max_input_tokens": 128000,
-          "max_output_tokens": 16384,
+          "max_output_tokens": 128000,
           "input_cost_per_token": 0.0000025,
           "output_cost_per_token": 0.00001,
           "input_cost_per_token_batches": 0.00000125,
@@ -26,13 +26,13 @@ export default {
           "cache_read_input_token_cost": 0.00000125,
           "provider": "openai",
           "mode": "chat",
-          "supports_function_calling": true,
-          "supports_parallel_function_calling": true,
-          "supports_response_schema": true,
-          "supports_vision": true,
-          "supports_prompt_caching": true,
+          "supports_function_calling": false,
+          "supports_parallel_function_calling": false,
+          "supports_response_schema": false,
+          "supports_vision": false,
+          "supports_prompt_caching": false,
           "supports_system_messages": true,
-          "supports_tool_choice": true
+          "supports_tool_choice": false
       },
       {
           "model": "gpt-4.5-preview",
@@ -781,7 +781,7 @@ export default {
 
 export const providers = {
   "openai": {
-    "name": "OpenAI",
+    "name": "xAI",
     "baseURL": "http://localhost:8080/v1"
   },
   "openrouter": {
