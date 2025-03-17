@@ -782,7 +782,7 @@ export default {
 export const providers = {
   "openai": {
     "name": "OpenAI",
-    "baseURL": "https://api.openai.com/v1"
+    "baseURL": "http://localhost:8080/v1"
   },
   "openrouter": {
     "name": "OpenRouter",
