@@ -73,7 +73,7 @@ export default function ProjectOnboarding({
 
   // Load what we need for onboarding
   // NOTE: This whole component is statically rendered Once
-  const hasClaudeMd = existsSync(join(workspaceDir, 'KODING.md'))
+  const hasClaudeMd = existsSync(join(workspaceDir, 'GROK.md'))
   const isWorkspaceDirEmpty = isDirEmpty(workspaceDir)
   const needsClaudeMd = !hasClaudeMd && !isWorkspaceDirEmpty
   const showTerminalTip =
@@ -105,7 +105,7 @@ export default function ProjectOnboarding({
                   <OrderedList.Item key="claudemd">
                     <Text color={theme.secondaryText}>
                       Run <Text color={theme.text}>/init</Text> to create a
-                      KODING.md file with instructions for Grok Code.
+                      GROK.md file with instructions for Grok Code.
                     </Text>
                   </OrderedList.Item>,
                 )
