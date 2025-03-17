@@ -77,5 +77,10 @@
   "devDependencies": {
     "react-devtools-core": "^6.1.1",
     "tsx": "^4.19.3"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "cli-spinners@3.2.0": "patches/cli-spinners@3.2.0.patch"
+    }
   }
 }
