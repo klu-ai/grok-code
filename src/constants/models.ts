@@ -26,13 +26,13 @@ export default {
           "cache_read_input_token_cost": 0.00000125,
           "provider": "openai",
           "mode": "chat",
-          "supports_function_calling": false,
-          "supports_parallel_function_calling": false,
-          "supports_response_schema": false,
-          "supports_vision": false,
-          "supports_prompt_caching": false,
+          "supports_function_calling": true,
+          "supports_parallel_function_calling": true,
+          "supports_response_schema": true,
+          "supports_vision": true,
+          "supports_prompt_caching": true,
           "supports_system_messages": true,
-          "supports_tool_choice": false
+          "supports_tool_choice": true
       },
       {
           "model": "gpt-4.5-preview",
