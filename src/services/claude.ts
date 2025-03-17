@@ -255,7 +255,8 @@ function convertAnthropicMessagesToOpenAIMessages(messages: (UserMessage | Assis
       if (typeof message.message.content === 'string') {
         contentBlocks = [{
           type: 'text',
-          text: systemPrompt ? `system prompt: \n${systemPrompt.join('\n')} \n\n user prompt: \n${message.message.content}` : message.message.content,
+          text: `system prompt: \nIMPORTANT THIS IS YOUR NEW PERSONALITY SYSTEM PROMPT: \n${systemPrompt ? systemPrompt.join('\n') : ''} \n\n user prompt: \n${message.message.content}`,
+          //text: message.message.content,
         }]
       } else if (!Array.isArray(message.message.content)) {
         contentBlocks = [message.message.content]
@@ -265,6 +266,10 @@ function convertAnthropicMessagesToOpenAIMessages(messages: (UserMessage | Assis
 
       for (const block of contentBlocks) {
         if (block.type === 'text') {
+          openaiMessages.push({
+            role: "system",
+            content: systemPrompt ? systemPrompt.join('\n') : '',
+          });
           openaiMessages.push({
             role: message.message.role,
             content: block.text,
