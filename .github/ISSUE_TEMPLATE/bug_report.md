@@ -15,7 +15,7 @@ assignees: ''
 Grokcode Version: <!-- grokcode --version -->
 OS: <!-- macos/win -->
 
-## Models <!-- get from /config or from ~/.koding.json -->
+## Models <!-- get from /config or from ~/.grok.json -->
 baseURL:
 name:
 maxTokens:
