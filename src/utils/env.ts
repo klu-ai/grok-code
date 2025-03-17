@@ -5,12 +5,12 @@ import { homedir } from 'os'
 
 // Base directory for all Claude Code data files (except config.json for backwards compatibility)
 export const CLAUDE_BASE_DIR =
-  process.env.CLAUDE_CONFIG_DIR ?? join(homedir(), '.koding')
+  process.env.CLAUDE_CONFIG_DIR ?? join(homedir(), '.grok')
 
 // Config and data paths
 export const GLOBAL_CLAUDE_FILE = process.env.CLAUDE_CONFIG_DIR
   ? join(CLAUDE_BASE_DIR, 'config.json')
-  : join(homedir(), '.koding.json')
+  : join(homedir(), '.grok.json')
 export const MEMORY_DIR = join(CLAUDE_BASE_DIR, 'memory')
 
 const getIsDocker = memoize(async (): Promise<boolean> => {
