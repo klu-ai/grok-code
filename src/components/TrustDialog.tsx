@@ -83,7 +83,7 @@ export function TrustDialog({ onDone }: Props): React.ReactNode {
             folder. Executing untrusted code is unsafe.
           </Text>
 
-          <Link url="https://docs.anthropic.com/s/claude-code-security" />
+          <Link url="https://github.com/klu-ai/grok-code" />
         </Box>
 
         <Select
