@@ -243,7 +243,7 @@ export async function verifyApiKey(apiKey: string): Promise<boolean> {
   }
 }
 
-function convertAnthropicMessagesToOpenAIMessages(messages: (UserMessage | AssistantMessage)[]): (OpenAI.ChatCompletionMessageParam | OpenAI.ChatCompletionToolMessageParam)[] {
+function convertAnthropicMessagesToOpenAIMessages(messages: (UserMessage | AssistantMessage)[], systemPrompt?: string[]): (OpenAI.ChatCompletionMessageParam | OpenAI.ChatCompletionToolMessageParam)[] {
   const openaiMessages: (OpenAI.ChatCompletionMessageParam | OpenAI.ChatCompletionToolMessageParam)[] = []
   const toolResults: Record<string, OpenAI.ChatCompletionToolMessageParam> = {}
 
@@ -255,7 +255,7 @@ function convertAnthropicMessagesToOpenAIMessages(messages: (UserMessage | Assis
       if (typeof message.message.content === 'string') {
         contentBlocks = [{
           type: 'text',
-          text: message.message.content,
+          text: systemPrompt ? `system prompt: \n${systemPrompt.join('\n')} \n\n user prompt: \n${message.message.content}` : message.message.content,
         }]
       } else if (!Array.isArray(message.message.content)) {
         contentBlocks = [message.message.content]
@@ -890,7 +890,7 @@ async function queryOpenAI(
     content: s.text,
   }) as OpenAI.ChatCompletionMessageParam)
   
-  const openaiMessages = convertAnthropicMessagesToOpenAIMessages(messages)
+  const openaiMessages = convertAnthropicMessagesToOpenAIMessages(messages, systemPrompt)
   const startIncludingRetries = Date.now()
 
   let start = Date.now()
