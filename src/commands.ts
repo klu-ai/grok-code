@@ -5,6 +5,7 @@ import config from './commands/config'
 import cost from './commands/cost'
 import ctx_viz from './commands/ctx_viz'
 import doctor from './commands/doctor'
+import exit from './commands/exit'
 import help from './commands/help'
 import init from './commands/init'
 import listen from './commands/listen'
@@ -80,6 +81,7 @@ const COMMANDS = memoize((): Command[] => [
   config,
   cost,
   doctor,
+  exit,
   help,
   init,
   model,
