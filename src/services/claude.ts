@@ -245,29 +245,31 @@ export async function verifyApiKey(apiKey: string): Promise<boolean> {
 
 function convertAnthropicMessagesToOpenAIMessages(messages: (UserMessage | AssistantMessage)[]): (OpenAI.ChatCompletionMessageParam | OpenAI.ChatCompletionToolMessageParam)[] {
   const openaiMessages: (OpenAI.ChatCompletionMessageParam | OpenAI.ChatCompletionToolMessageParam)[] = []
-  
   const toolResults: Record<string, OpenAI.ChatCompletionToolMessageParam> = {}
 
-  for (const message of messages) {
-    let contentBlocks = []
-    if (typeof message.message.content === 'string') {
-      contentBlocks = [{
-        type: 'text',
-        text: message.message.content,
-      }]
-    } else if (!Array.isArray(message.message.content)) {
-      contentBlocks = [message.message.content]
-    } else {
-      contentBlocks = message.message.content
-    }
+  // If there's only one message or less, handle it directly without special grouping
+  if (messages.length <= 1) {
+    // Process single message normally
+    for (const message of messages) {
+      let contentBlocks = []
+      if (typeof message.message.content === 'string') {
+        contentBlocks = [{
+          type: 'text',
+          text: message.message.content,
+        }]
+      } else if (!Array.isArray(message.message.content)) {
+        contentBlocks = [message.message.content]
+      } else {
+        contentBlocks = message.message.content
+      }
 
-    for (const block of contentBlocks) {
-      if(block.type === 'text') {
+      for (const block of contentBlocks) {
+        if (block.type === 'text') {
           openaiMessages.push({
             role: message.message.role,
             content: block.text,
-          })
-      } else if(block.type === 'tool_use') {
+          });
+        } else if (block.type === 'tool_use') {
           openaiMessages.push({
             role: 'assistant',
             content: undefined,
@@ -279,12 +281,132 @@ function convertAnthropicMessagesToOpenAIMessages(messages: (UserMessage | Assis
               },
               id: block.id,
             }],
-          })
-      } if(block.type === 'tool_result') {
-        toolResults[block.tool_use_id] = {
-          role: 'tool',
-          content: block.content,
-          tool_call_id: block.tool_use_id,
+          });
+        } else if (block.type === 'tool_result') {
+          toolResults[block.tool_use_id] = {
+            role: 'tool',
+            content: block.content,
+            tool_call_id: block.tool_use_id,
+          };
+        }
+      }
+    }
+  } else {
+    // For message history > 1, group the conversation history as context in the last user message
+    
+    // First, separate the most recent user message (if any) from conversation history
+    let historyMessages = [...messages];
+    let lastUserMessageIndex = -1;
+    
+    // Find the last user message
+    for (let i = historyMessages.length - 1; i >= 0; i--) {
+      if (historyMessages[i].message.role === 'user') {
+        lastUserMessageIndex = i;
+        break;
+      }
+    }
+    
+    // Group all previous messages into conversation history
+    const historyParts: string[] = [];
+    
+    // Process all messages except the last user message (if any)
+    for (let i = 0; i < historyMessages.length; i++) {
+      if (i === lastUserMessageIndex && lastUserMessageIndex === historyMessages.length - 1) {
+        // Skip the last user message if it's the final message - we'll add it separately
+        continue;
+      }
+      
+      const message = historyMessages[i];
+      let messageContent = '';
+      
+      // Process message content to get text representation
+      if (typeof message.message.content === 'string') {
+        messageContent = message.message.content;
+      } else if (Array.isArray(message.message.content)) {
+        // Extract text from content blocks
+        for (const block of message.message.content) {
+          if (block.type === 'text') {
+            messageContent += block.text;
+          }
+        }
+      }
+      
+      // Add formatted message to history
+      historyParts.push(`- ${message.message.role === 'user' ? 'user' : 'assistant'}\n${messageContent}`);
+    }
+    
+    // Add the latest user message with history context
+    if (lastUserMessageIndex === historyMessages.length - 1) {
+      const lastUserMessage = historyMessages[lastUserMessageIndex];
+      
+      let userContent = '';
+      if (typeof lastUserMessage.message.content === 'string') {
+        userContent = lastUserMessage.message.content;
+      } else if (Array.isArray(lastUserMessage.message.content)) {
+        // Extract text from content blocks
+        for (const block of lastUserMessage.message.content) {
+          if (block.type === 'text') {
+            userContent += block.text;
+          }
+        }
+      }
+      
+      // Combine history and current message in the user message
+      let combinedContent = '';
+      
+      if (historyParts.length > 0) {
+        combinedContent = historyParts.join('\n=======\n') + '\n=======\n' + userContent;
+      } else {
+        combinedContent = userContent;
+      }
+      
+      // Add the combined user message
+      openaiMessages.push({
+        role: 'user',
+        content: combinedContent,
+      });
+    } else if (historyParts.length > 0) {
+      // If there's no final user message but we have history, add it as a user message
+      openaiMessages.push({
+        role: 'user',
+        content: historyParts.join('\n=======\n'),
+      });
+    }
+    
+    // Process any tool use blocks from all messages
+    for (const message of messages) {
+      let contentBlocks = []
+      if (typeof message.message.content === 'string') {
+        contentBlocks = [{
+          type: 'text',
+          text: message.message.content,
+        }]
+      } else if (!Array.isArray(message.message.content)) {
+        contentBlocks = [message.message.content]
+      } else {
+        contentBlocks = message.message.content
+      }
+      
+      for (const block of contentBlocks) {
+        if (block.type === 'tool_use') {
+          openaiMessages.push({
+            role: 'assistant',
+            content: undefined,
+            tool_calls: [{
+              type: 'function',
+              function: {
+                name: block.name,
+                arguments: JSON.stringify(block.input),
+              },
+              id: block.id,
+            }],
+          });
+        } else if (block.type === 'tool_result') {
+          toolResults[block.tool_use_id] = {
+            role: 'tool',
+            content: block.content,
+            tool_call_id: block.tool_use_id,
+          };
         }
       }
     }
@@ -292,12 +414,12 @@ function convertAnthropicMessagesToOpenAIMessages(messages: (UserMessage | Assis
 
   const finalMessages: (OpenAI.ChatCompletionMessageParam | OpenAI.ChatCompletionToolMessageParam)[] = []
   
-  for(const message of openaiMessages) {
+  for (const message of openaiMessages) {
     finalMessages.push(message)
     
-    if('tool_calls' in message && message.tool_calls) {
-      for(const toolCall of message.tool_calls) {
-        if(toolResults[toolCall.id]) {
+    if ('tool_calls' in message && message.tool_calls) {
+      for (const toolCall of message.tool_calls) {
+        if (toolResults[toolCall.id]) {
           finalMessages.push(toolResults[toolCall.id])
         }
       }
