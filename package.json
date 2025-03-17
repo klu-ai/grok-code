@@ -1,23 +1,23 @@
 {
-  "name": "anon-kode",
+  "name": "grok-code",
   "version": "0.0.35",
   "bin": {
-    "kode": "cli.mjs"
+    "grokcode": "cli.mjs"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "type": "module",
-  "author": "Anon Kode <anon@kode.com>",
+  "author": "Grok Code <grok@code.com>",
   "license": "",
-  "description": "Use Anon Kode, Anon's AI assistant, right from your terminal. Anon Kode can understand your codebase, edit files, run terminal commands, and handle entire workflows for you.",
-  "homepage": "https://github.com/dnakov/anon-kode",
+  "description": "Use Grok Code, Grok's AI assistant, right from your terminal. Grok Code can understand your codebase, edit files, run terminal commands, and handle entire workflows for you.",
+  "homepage": "https://github.com/klu-ai/grok-code",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dnakov/anon-kode.git"
+    "url": "https://github.com/klu-ai/grok-code.git"
   },
   "bugs": {
-    "url": "https://github.com/dnakov/anon-kode/issues"
+    "url": "https://github.com/klu-ai/grok-code/issues"
   },
   "files": [
     "cli.mjs",

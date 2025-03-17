@@ -18,7 +18,7 @@ import { openBrowser } from '../utils/browser'
 import { useExitOnCtrlCD } from '../hooks/useExitOnCtrlCD'
 import { MACRO } from '../constants/macros'
 const GITHUB_ISSUES_REPO_URL =
-  'https://github.com/dnakov/anon-kode/issues'
+  'https://github.com/dnakov/grok-code/issues'
 
 type Props = {
   onDone(result: string): void

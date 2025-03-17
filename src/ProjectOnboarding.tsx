@@ -95,7 +95,7 @@ export default function ProjectOnboarding({
                 items.push(
                   <OrderedList.Item key="workspace">
                     <Text color={theme.secondaryText}>
-                      Ask Kode to create a new app or clone a repository.
+                      Ask Grokcode to create a new app or clone a repository.
                     </Text>
                   </OrderedList.Item>,
                 )
@@ -105,7 +105,7 @@ export default function ProjectOnboarding({
                   <OrderedList.Item key="claudemd">
                     <Text color={theme.secondaryText}>
                       Run <Text color={theme.text}>/init</Text> to create a
-                      KODING.md file with instructions for Anon Kode.
+                      KODING.md file with instructions for Grok Code.
                     </Text>
                   </OrderedList.Item>,
                 )
@@ -125,7 +125,7 @@ export default function ProjectOnboarding({
               items.push(
                 <OrderedList.Item key="questions">
                   <Text color={theme.secondaryText}>
-                    Ask Kode questions about your codebase.
+                    Ask Grokcode questions about your codebase.
                   </Text>
                 </OrderedList.Item>,
               )
@@ -133,7 +133,7 @@ export default function ProjectOnboarding({
               items.push(
                 <OrderedList.Item key="changes">
                   <Text color={theme.secondaryText}>
-                    Ask Kode to implement changes to your codebase.
+                    Ask Grokcode to implement changes to your codebase.
                   </Text>
                 </OrderedList.Item>,
               )

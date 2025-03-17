@@ -1,4 +1,4 @@
-# ANON KODE
+# GROK CODE
 
 
 https://github.com/user-attachments/assets/7a9253a7-8bb0-40d5-a3f3-5e6096d7c789
@@ -14,9 +14,9 @@ Terminal-based AI coding tool that can use any model that supports the OpenAI-st
 ## HOW TO USE
 
 ```
-npm install -g anon-kode
+npm install -g grok-code
 cd your-project
-kode
+grokcode
 ```
 
 You can use the onboarding to set up the model, or `/model`.

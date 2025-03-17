@@ -10,7 +10,7 @@ import { BashTool } from '../tools/BashTool/BashTool'
 import { getSlowAndCapableModel } from '../utils/model'
 import { MACRO } from './macros'
 export function getCLISyspromptPrefix(): string {
-  return `You are ${PRODUCT_NAME}, Anon's unofficial CLI for Koding.`
+  return `You are ${PRODUCT_NAME}, Grok's unofficial CLI for Koding.`
 }
 
 export async function getSystemPrompt(): Promise<string[]> {
@@ -23,7 +23,7 @@ IMPORTANT: Before you begin work, think about what the code you're editing is su
 Here are useful slash commands users can run to interact with you:
 - /help: Get help with using ${PRODUCT_NAME}
 - /compact: Compact and continue the conversation. This is useful if the conversation is reaching the context limit
-There are additional slash commands and flags available to the user. If the user asks about ${PRODUCT_NAME} functionality, always run \`kode -h\` with ${BashTool.name} to see supported commands and flags. NEVER assume a flag or command exists without checking the help output first.
+There are additional slash commands and flags available to the user. If the user asks about ${PRODUCT_NAME} functionality, always run \`grokcode -h\` with ${BashTool.name} to see supported commands and flags. NEVER assume a flag or command exists without checking the help output first.
 To give feedback, users should ${MACRO.ISSUES_EXPLAINER}.
 
 # Memory
@@ -143,7 +143,7 @@ Model: ${model}
 
 export async function getAgentPrompt(): Promise<string[]> {
   return [
-    `You are an agent for ${PRODUCT_NAME}, Anon's unofficial CLI for Koding. Given the user's prompt, you should use the tools available to you to answer the user's question.
+    `You are an agent for ${PRODUCT_NAME}, Grok's unofficial CLI for Koding. Given the user's prompt, you should use the tools available to you to answer the user's question.
 
 Notes:
 1. IMPORTANT: You should be concise, direct, and to the point, since your responses will be displayed on a command line interface. Answer the user's question directly, without elaboration, explanation, or details. One word answers are best. Avoid introductions, conclusions, and explanations. You MUST avoid text before/after your response, such as "The answer is <answer>.", "Here is the content of the file..." or "Based on the information provided, the answer is..." or "Here is what I will do next...".

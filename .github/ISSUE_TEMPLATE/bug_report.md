@@ -12,7 +12,7 @@ assignees: ''
 
 
 ## App and Environment Info
-Kode Version: <!-- kode --version -->
+Grokcode Version: <!-- grokcode --version -->
 OS: <!-- macos/win -->
 
 ## Models <!-- get from /config or from ~/.koding.json -->
