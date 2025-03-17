@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  cli-spinners@3.2.0:
+    hash: to4ioifw27lkxrrq4uxzpcylmu
+    path: patches/cli-spinners@3.2.0.patch
+
 dependencies:
   '@anthropic-ai/bedrock-sdk':
     specifier: ^0.12.4
@@ -1080,7 +1085,7 @@ packages:
       ink: '>=5'
     dependencies:
       chalk: 5.4.1
-      cli-spinners: 3.2.0
+      cli-spinners: 3.2.0(patch_hash=to4ioifw27lkxrrq4uxzpcylmu)
       deepmerge: 4.3.1
       figures: 6.1.0
       ink: 5.2.0(@types/react@19.0.10)(react-devtools-core@6.1.1)(react@18.3.1)
@@ -2596,10 +2601,11 @@ packages:
       yargs: 16.2.0
     dev: false
 
-  /cli-spinners@3.2.0:
+  /cli-spinners@3.2.0(patch_hash=to4ioifw27lkxrrq4uxzpcylmu):
     resolution: {integrity: sha512-pXftdQloMZzjCr3pCTIRniDcys6dDzgpgVhAHHk6TKBDbRuP1MkuetTF5KSv4YUutbOPa7+7ZrAJ2kVtbMqyXA==}
     engines: {node: '>=18.20'}
     dev: false
+    patched: true
 
   /cli-table3@0.6.5:
     resolution: {integrity: sha512-+W/5efTR7y5HRD7gACw9yQjqMVvEMLBHmboM/kPWam+H+Hmyrgjh6YncVKK122YZkXrLudzTuAukUw9FnMf7IQ==}
